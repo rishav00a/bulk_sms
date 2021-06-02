@@ -56,19 +56,23 @@ class RestDatasource {
   }
 
 
-  Future<dynamic> sendbulkSMSM(List<dynamic> receip , String recep_mobiles, String message) async {
+  Future<dynamic> sendbulkSMSM(List<dynamic> receip , String recep_mobiles, String message, flow_id) async {
     print("res");
-
-    return _netUtil.post(PWA_URL+"?", "", body: {
+    print(json.encode(receip));
+    final body =  {
       "authkey": "309462Aq7u3FeNtJ5e109a48P1",
-      "flow_id": "5f571c23374b19527e6c98d4",
-      "sender": "PJCOMM",
+      "flow_id": flow_id,
+      "sender": "SSLHIC",
       "unicode": "1",
-      "route":"1",
-      "recipients":json.encode(receip),
-      "message":message,
-      // "mobiles":recep_mobiles
-    }).then((dynamic res) async {
+      "route":"4",
+      "recipients":receip
+    };
+    // print(body);
+    String body_enc = json.encode(body);
+    print(body_enc);
+
+
+    return _netUtil.post(PWA_URL, "", body: body_enc).then((dynamic res) async {
       print(res);
 
       return res;

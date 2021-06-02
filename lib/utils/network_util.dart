@@ -41,7 +41,7 @@ class NetworkUtil {
     return http
         .post(url,
         body: body,
-        headers: {HttpHeaders.authorizationHeader: "Bearer $token", "authkey":"msg_91_auth_key"},
+        headers: {HttpHeaders.authorizationHeader: "Bearer $token","content-type" : "application/json"},
         encoding: encoding)
         .then((http.Response response) {
       final String res = response.body;

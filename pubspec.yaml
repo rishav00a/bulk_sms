@@ -26,6 +26,7 @@ dependencies:
   dropdown_search: ^0.4.8
   slugify: ^1.0.0
   flutter_multiselect: ^0.5.1
+  web_socket_channel: ^2.1.0
 
   flutter:
     sdk: flutter

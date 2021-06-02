@@ -13,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slugify/slugify.dart';
 import '../Theme.dart' as CustomTheme;
 import '../text_style.dart';
-import 'package:path/path.dart';
 
 class AddGroupPage extends StatefulWidget {
   @override

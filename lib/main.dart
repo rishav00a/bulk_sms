@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:glinic_manager/pages/root_page.dart';
 import 'package:glinic_manager/services/authentication.dart';
+import 'package:web_socket_channel/io.dart';
 import 'Theme.dart' as CustomTheme;
+import 'package:web_socket_channel/status.dart' as status;
 
 void main(){
 
@@ -15,21 +17,15 @@ final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 class MyApp extends StatelessWidget {
   FirebaseUser user;
 
-
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
-
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-
         primarySwatch: CustomTheme.mainColorTheme,
       ),
-      home: SplashScreen(),
+      home: SplashScreen()
     );
   }
 }

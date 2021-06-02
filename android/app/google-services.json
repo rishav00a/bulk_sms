@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "454848007152",
-    "project_id": "bulk-sms-feb5b",
-    "storage_bucket": "bulk-sms-feb5b.appspot.com"
+    "project_number": "925022912033",
+    "project_id": "heroironbulksms",
+    "storage_bucket": "heroironbulksms.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:454848007152:android:5a6bafa85cd89180616b35",
+        "mobilesdk_app_id": "1:925022912033:android:63d4780c6ab3ae79272d60",
         "android_client_info": {
           "package_name": "com.haxotech.bulksms"
         }
       },
       "oauth_client": [
         {
-          "client_id": "454848007152-59mgsqldlh3b8l6k17k6ma9943oqmr5i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.haxotech.bulksms",
-            "certificate_hash": "eb98767ea9c8658a04ba4b653fe75949f2b990f4"
-          }
-        },
-        {
-          "client_id": "454848007152-6r9913r9hcvpvkvik1up5s796fqntmci.apps.googleusercontent.com",
+          "client_id": "925022912033-l89m5inpd8dn4661g5l5ksa2j6tlha36.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAnisxoBVxds2WhpwuKzcrLhO2Gr6FNbFo"
+          "current_key": "AIzaSyCyK12m7VuUwi-WPFgb8po3448Btl6Y_CA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "454848007152-6r9913r9hcvpvkvik1up5s796fqntmci.apps.googleusercontent.com",
+              "client_id": "925022912033-l89m5inpd8dn4661g5l5ksa2j6tlha36.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

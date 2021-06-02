@@ -16,7 +16,7 @@ import 'package:loading/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Theme.dart' as CustomTheme;
 import '../text_style.dart';
-import 'package:path/path.dart';
+// import 'package:path/path.dart';
 
 import 'create_contact.dart';
 
@@ -33,6 +33,11 @@ class _CreateOrderState extends State<CreateOrderPage>
   List<dynamic> list_groups_selected = new List();
   List<String> mobile_numbers = [];
   RestDatasource api = new RestDatasource();
+  String over_booked_var;
+
+  String drc_state, drc_date, drc_val1, drc_val2, drc_val3;
+  String rcprc_state, rcprc_date, rcprc_val1, rcprc_val2, rcprc_val3, rcprc_val4, rcprc_val5, rcprc_val6, rcprc_val7, rcprc_val8, rcprc_val9;
+
 
 
   bool dropDown = false;
@@ -41,7 +46,315 @@ class _CreateOrderState extends State<CreateOrderPage>
   FirebaseUser _firebaseUser;
   final _formKey = GlobalKey<FormState>();
 
+  String _chosenValue;
+
   bool formSaving = false;
+  List<Widget> getSpecificForm(){
+    if(_chosenValue == "over_booked"){
+      return <Widget>[Container(
+        child: TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Date";
+            }
+            return null;
+          },
+          onSaved: (val) => this.over_booked_var = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "Date",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+      )];
+    }
+    else if (_chosenValue == "dealer_rate_change"){
+      return <Widget>[
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter State";
+            }
+            return null;
+          },
+          onSaved: (val) => this.drc_state = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "State",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+        SizedBox(height: 30,),
+
+
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Date";
+            }
+            return null;
+          },
+          onSaved: (val) => this.drc_date = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "Date",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+        SizedBox(height: 30,),
+
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Pricing 1";
+            }
+            return null;
+          },
+          onSaved: (val) => this.drc_val1 = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "12,16,20,25 MM Price",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+        SizedBox(height: 30,),
+
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Pricing 2";
+            }
+            return null;
+          },
+          onSaved: (val) => this.drc_val2 = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "10 MM Price",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+        SizedBox(height: 30,),
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Pricing 3";
+            }
+            return null;
+          },
+          onSaved: (val) => this.drc_val3 = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "08 & 32 MM Price",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+
+      ];
+    }
+    else if (_chosenValue == "rcp_rate_change"){
+      return <Widget>[
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter State";
+            }
+            return null;
+          },
+          onSaved: (val) => this.rcprc_state = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "State",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+        SizedBox(height: 30,),
+
+
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Date";
+            }
+            return null;
+          },
+          onSaved: (val) => this.rcprc_date = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "Date",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+        SizedBox(height: 30,),
+
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Pricing 1";
+            }
+            return null;
+          },
+          onSaved: (val) => this.rcprc_val1 = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "5.5mm Price",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+        SizedBox(height: 30,),
+
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Pricing 2";
+            }
+            return null;
+          },
+          onSaved: (val) => this.rcprc_val2 = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "08mm Price",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+        SizedBox(height: 30,),
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Pricing 3";
+            }
+            return null;
+          },
+          onSaved: (val) => this.rcprc_val3 = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "10mm Price",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+
+
+        SizedBox(height: 30,),
+
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Pricing 4";
+            }
+            return null;
+          },
+          onSaved: (val) => this.rcprc_val4 = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "12mm Price",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+        SizedBox(height: 30,),
+
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Pricing 5";
+            }
+            return null;
+          },
+          onSaved: (val) => this.rcprc_val5 = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "16mm Price",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+        SizedBox(height: 30,),
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Pricing 6";
+            }
+            return null;
+          },
+          onSaved: (val) => this.rcprc_val6 = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "20mm Price",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+
+
+        SizedBox(height: 30,),
+
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Pricing 7";
+            }
+            return null;
+          },
+          onSaved: (val) => this.rcprc_val7 = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "25mm Price",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+        SizedBox(height: 30,),
+
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Pricing 8";
+            }
+            return null;
+          },
+          onSaved: (val) => this.rcprc_val8 = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "28mm Price",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+        SizedBox(height: 30,),
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter Pricing 9";
+            }
+            return null;
+          },
+          onSaved: (val) => this.rcprc_val9 = val,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "32mm Price",
+            hintStyle: TextStyle(
+                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+          ),
+        ),
+
+
+      ];
+
+    }
+    else{
+      return <Widget>[Container()];
+    }
+  }
 
   saveForm() async {
     final form = _formKey.currentState;
@@ -87,12 +400,48 @@ class _CreateOrderState extends State<CreateOrderPage>
 
         }
         mobile_numbers.add(element.data["contact"]);
-        recep.add({
+        if(_chosenValue == "over_booked"){
+          recep.add({
 
-        "mobiles":"91"+element.data["contact"],
-          "VAR1":"s",
-          "VAR2":"u"
-        });
+            "mobiles":"91"+element.data["contact"],
+            "var":over_booked_var,
+
+          });
+        }
+        else if (_chosenValue == "dealer_rate_change"){
+          recep.add({
+
+            "mobiles":"91"+element.data["contact"],
+            "state":drc_state,
+            "date":drc_date,
+            "group1":"12,16,20,25 MM - Rs",
+            "val1":drc_val1+"/- pmt",
+            "group2":"10 MM - Rs",
+            "val2":drc_val2+"/- pmt",
+            "group3":"08 & 32 MM - Rs",
+            "val3":drc_val3+"/- pmt",
+
+          });
+        }
+        else if (_chosenValue == "rcp_rate_change"){
+          recep.add({
+
+            "mobiles":"91"+element.data["contact"],
+            "state":rcprc_state,
+            "date":rcprc_date,
+            "price1":rcprc_val1,
+            "price2":rcprc_val2,
+            "price3":rcprc_val3,
+            "price4":rcprc_val4,
+            "price5":rcprc_val5,
+            "price6":rcprc_val6,
+            "price7":rcprc_val7,
+            "price8":rcprc_val8,
+            "price9":rcprc_val9
+          });
+        }
+
+
 
         recep_mobiles = recep_mobiles+ext+element.data["contact"];
         recep_mobiles_list.add("91"+element.data["contact"]);
@@ -102,8 +451,22 @@ class _CreateOrderState extends State<CreateOrderPage>
 
       print(recep);
       print(recep_mobiles);
+      String flow_id = "";
 
-      this.api.sendbulkSMS(recep,recep_mobiles,message).then((onValue) async {
+
+      if(_chosenValue == "over_booked"){
+        flow_id = "609e5518c6109f777641c4aa";
+
+      }
+      else if(_chosenValue == "dealer_rate_change"){
+        flow_id = "60a60fa0b848384e4a5a4924";
+      }
+      else if(_chosenValue == "rcp_rate_change"){
+        flow_id = "60a621bae98c812dc57d3e43";
+      }
+
+
+      this.api.sendbulkSMSM(recep,recep_mobiles,message, flow_id).then((onValue) async {
           success= true;
       }).catchError((onError){
       });
@@ -179,19 +542,51 @@ class _CreateOrderState extends State<CreateOrderPage>
                           }
                       ),
                       SizedBox(height: 30,),
+    Container(
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.only(bottom: 30),
+      width: MediaQuery.of(context).size.width-40,
 
-                      TextFormField(
-                        onSaved: (val) => this.message = val,
-                        minLines: 3,
-                        maxLines: 5,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                          ),
-                          labelText: "Message",
-                          hintStyle: TextStyle(
-                              fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(color:Colors.black54)
+      ),
+    child:DropdownButtonHideUnderline (child:DropdownButton<String>(
+                        focusColor:Colors.white,
+                        value: _chosenValue,
+                        //elevation: 5,
+                        style: TextStyle(color: Colors.white),
+                        iconEnabledColor:Colors.black,
+                        items: <String>[
+                          'over_booked',
+                          'dealer_rate_change',
+                          'rcp_rate_change'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value,style:TextStyle(color:Colors.black),),
+                          );
+                        }).toList(),
+                        hint:Text(
+                          "Select SMS Type",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
                         ),
+                        onChanged: (String value) {
+                          setState(() {
+                            _chosenValue = value;
+                          });
+                        },
+                      ),)),
+
+                      Column(
+                        // physics: NeverScrollableScrollPhysics(),
+                        // shrinkWrap: true,
+                      children: getSpecificForm(),
                       ),
+
                       Padding(
                         padding: EdgeInsets.all(5),
                       ),
@@ -222,7 +617,7 @@ class _CreateOrderState extends State<CreateOrderPage>
             color: CustomTheme.Colors.appthemeColor,
             child: new Text('Send SMS',
                 style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-            onPressed: saveForm,
+            onPressed: _chosenValue!=null? saveForm:null,
           ),
         ));
   }

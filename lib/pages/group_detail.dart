@@ -36,11 +36,11 @@ class _ListgroupPeopleState extends State<ListgroupPeople> {
     }
     searchcontroller.addListener(searchListener);
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: ()=>Navigator.of(context).push(PageRouteBuilder(
-            pageBuilder: (_, __, ___) => new SendSMStoGroup(widget.group))),
-        child: FaIcon(FontAwesomeIcons.sms),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: ()=>Navigator.of(context).push(PageRouteBuilder(
+      //       pageBuilder: (_, __, ___) => new SendSMStoGroup(widget.group))),
+      //   child: FaIcon(FontAwesomeIcons.sms),
+      // ),
        appBar: AppBar(
             centerTitle: true,
 
